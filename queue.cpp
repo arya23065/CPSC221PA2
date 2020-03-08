@@ -14,6 +14,7 @@ template <class T> void Queue<T>::enqueue(T const &newItem)
     /**
      * @todo Your code here!
      */
+     stack_1.push(newItem);
 }
 
 /**
@@ -27,6 +28,15 @@ template <class T> T Queue<T>::dequeue()
     /**
      * @todo Your code here! You will need to replace the following line.
      */
+     if (!(stack_1.isEmpty() && stack_2.isEmpty())) {
+       if (stack_2.isEmpty()) {
+         while (!stack_1.isEmpty()) {
+           stack_2.push(stack_1.pop());
+         }
+         return stack_2.pop();
+       }
+     }
+     return NULL;
 }
 
 /**
@@ -40,6 +50,7 @@ template <class T> void Queue<T>::add(const T &theItem)
      * @todo Your code here! Hint: this function should call a Queue
      *  function to add the element to the Queue.
      */
+     enqueue(theItem);
 }
 
 /**
@@ -54,6 +65,7 @@ template <class T> T Queue<T>::remove()
      *  function to remove an element from the Queue and return it. You will
      *  need to replace the following line.
      */
+     return dequeue();
 }
 
 /**
@@ -67,6 +79,14 @@ template <class T> T Queue<T>::peek()
     /**
      * @todo Your code here! You will need to replace the following line.
      */
+     if (!(stack_1.isEmpty() && stack_2.isEmpty())) {
+       if (stack_2.isEmpty()) {
+         while (!stack_1.isEmpty()) {
+           stack_2.push(stack_1.pop());
+         }
+         return stack_2.peek();
+       }
+     }
 }
 
 /**
@@ -79,4 +99,5 @@ template <class T> bool Queue<T>::isEmpty() const
     /**
      * @todo Your code here! You will need to replace the following line.
      */
+     return (stack_1.isEmpty() && stack_2.isEmpty());
 }

@@ -10,6 +10,7 @@ using namespace std;
 TEST_CASE("stack::basic functions", "[weight=1][part=stack]")
 {
     // cout << "Testing Stack..." << endl;
+
     Stack<int> intStack;
     vector<int> result;
     vector<int> expected;
@@ -19,6 +20,7 @@ TEST_CASE("stack::basic functions", "[weight=1][part=stack]")
     }
     for (int i = 1; i <= 10; i++)
     {
+      // std::cout << "!!!!!!!!!!!!!!  m  !!!!!!!!!!!!!!!!!!World!";
         intStack.push(i);
     }
     // cout << intStack.peek() << endl;
@@ -50,5 +52,6 @@ TEST_CASE("queue::basic functions", "[weight=1][part=queue]")
         result.push_back(intQueue.dequeue());
         // cout << intStack.pop() << " ";
     }
+    std::cout << "!!!!!!!!!!!!!!  m  !!!!!!!!!!!!!!!!!! World!";
     REQUIRE(result == expected);
 }

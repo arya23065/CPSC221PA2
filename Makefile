@@ -24,6 +24,9 @@ $(TEST_SQ) : $(OBJS_TEST_SQ)
 $(TEST_FILLS) : $(OBJS_COLORPICKERS) $(OBJS_TEST_FILLS) $(OBJS_UTILS)
 	$(LD) $^ $(LDFLAGS) -o $@
 
+stack.o : stack.cpp $(INCLUDE_SQ)
+	$(CXX) $(CXXFLAGS) $< -o $@
+
 testStackQueue.o : testStackQueue.cpp $(INCLUDE_SQ)
 	$(CXX) $(CXXFLAGS) $< -o $@
 

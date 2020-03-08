@@ -15,6 +15,12 @@ template <class T> Stack<T>::Stack()
     /**
      * @todo Your code here!
      */
+     items = new T[DEFAULTCAPACITY];
+    // std::cout <<"WOOOOOOOOOOOO!!!!!!!!!!!!heeeeeeee\n";
+     max_items = DEFAULTCAPACITY;
+     num_items = 0;
+     // std::cout <<"WOOOOOOOOOOOO!!!!!!!!!!!!\n";
+
 }
 
 /**
@@ -26,6 +32,9 @@ template <class T> Stack<T>::~Stack()
     /**
      * @todo Your code here!
      */
+     delete [] items;
+     num_items = 0;
+     max_items = 0;
 }
 
 /**
@@ -43,7 +52,10 @@ void Stack<T>::push(const T &newItem){
     /**
      * @todo Your code here!
      */
-};
+     if (num_items == max_items)        resize(EXPANSIONFACTOR * max_items);
+     items[num_items] = newItem;
+     num_items++;
+}
 
 /**
  * Removes the object on top of the Stack, and returns it. That is, remove
@@ -59,8 +71,19 @@ T Stack<T>::pop(){
     /**
      * @todo Your code here!
      */
+     if (!isEmpty()) {
+       T temp = items[num_items - 1];
+       items[num_items - 1] = NULL;
+       num_items--;
+       std::cout << "hehhehehhhhhhhhhhhhhhh World! max items %p\n";
+       // If, after removing an element, the number of elements in the stack is less than max_items / SHRINKRATE, you resize the stack.
+       // the new max_items should be the old max_items * 1 / EXPANSIONFACTOR.
+       if (num_items <  max_items / SHRINKRATE)   resize(max_items / EXPANSIONFACTOR);
+       return temp;
+     }
+     std::cout << "doneonoenoeneoneoen World! max items %p\n";
+     return NULL;
 };
-
 /**
  * Adds an element to the ordering structure.
  *
@@ -72,6 +95,7 @@ template <class T> void Stack<T>::add(const T &theItem)
      * @todo Your code here! Hint: this should call another Stack function
      *  to add the element to the Stack.
      */
+     push(theItem);
 }
 
 /**
@@ -85,6 +109,7 @@ template <class T> T Stack<T>::remove()
      * @todo Your code here! Hint: this should call another Stack function
      * to remove an element from the Stack and return it.
      */
+     return pop();
 }
 
 /**
@@ -100,6 +125,8 @@ T Stack<T>::peek(){
     /**
      * @todo Your code here!
      */
+     if (!isEmpty()) return items[num_items - 1];
+     else return NULL;
 };
 
 /**
@@ -112,6 +139,7 @@ bool Stack<T>::isEmpty() const {
     /**
      * @todo Your code here!
      */
+     return num_items == 0;
 };
 
 /**
@@ -127,6 +155,7 @@ size_t Stack<T>::capacity() const {
     /**
      * @todo Your code here!
      */
+     return max_items;
 };
 
 /**
@@ -139,6 +168,7 @@ size_t Stack<T>::size() const {
     /**
      * @todo Your code here!
      */
+     return num_items;
 };
 
 /**
@@ -152,4 +182,17 @@ void Stack<T>::resize(size_t n){
     /**
      * @todo Your code here!
      */
+     // If, after removing an element, the number of elements in the stack is less than max_items / SHRINKRATE, you resize the stack.
+     // the new max_items should be the old max_items * 1 / EXPANSIONFACTOR.
+     // change maxitems. copy and num items same
+     T* items_new = new T[n];
+
+     for (int i = 0; i < num_items; i++) {
+       items_new[i] = items[i];
+     }
+
+     max_items = n;
+     delete [] items;
+     items = items_new;
+     items_new = NULL;
 };
