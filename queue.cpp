@@ -31,15 +31,11 @@ template <class T> T Queue<T>::dequeue()
      if (!(stack_1.isEmpty() && stack_2.isEmpty())) {
        if (stack_2.isEmpty()) {
          while (!stack_1.isEmpty()) {
-           stack_2.push(stack_1.peek());
-           stack_1.pop();
+           stack_2.push(stack_1.pop());
          }
-         T temp = stack_2.peek();
-         stack_2.pop();
-         return temp;
        }
+       return stack_2.pop();
      }
-     return NULL;
 }
 
 /**
@@ -87,8 +83,8 @@ template <class T> T Queue<T>::peek()
          while (!stack_1.isEmpty()) {
            stack_2.push(stack_1.pop());
          }
-         return stack_2.peek();
        }
+       return stack_2.peek();
      }
 }
 

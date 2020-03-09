@@ -20,7 +20,7 @@ TEST_CASE("stack::basic functions", "[weight=1][part=stack]")
     }
     for (int i = 1; i <= 10; i++)
     {
-      // std::cout << "!!!!!!!!!!!!!!  m  !!!!!!!!!!!!!!!!!!World!";
+      // std::cout << "!!!!!!!!!!!!!!  m  !!!!!!!!!!!!!!!!!! World!";
         intStack.push(i);
     }
     // cout << intStack.peek() << endl;
@@ -34,7 +34,7 @@ TEST_CASE("stack::basic functions", "[weight=1][part=stack]")
 
 TEST_CASE("queue::basic functions", "[weight=1][part=queue]")
 {
-    // cout << "Testing Queue..." << endl;
+    cout << "Testing Queue..." << endl;
     Queue<int> intQueue;
     vector<int> result;
     vector<int> expected;
@@ -49,9 +49,9 @@ TEST_CASE("queue::basic functions", "[weight=1][part=queue]")
     // cout << intStack.peek() << endl;
     while (!intQueue.isEmpty())
     {
+      // std::cout << "!!!!!!!!!!!!!!  m  !!!!!!!!!!!!!!!!!! World!";
         result.push_back(intQueue.dequeue());
         // cout << intStack.pop() << " ";
     }
-    std::cout << "!!!!!!!!!!!!!!  m  !!!!!!!!!!!!!!!!!! World!";
     REQUIRE(result == expected);
 }

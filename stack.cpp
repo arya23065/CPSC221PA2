@@ -52,7 +52,7 @@ void Stack<T>::push(const T &newItem){
     /**
      * @todo Your code here!
      */
-     if (num_items == max_items)   Stack::resize(EXPANSIONFACTOR * max_items);
+     if (num_items == max_items)        resize(EXPANSIONFACTOR * max_items);
      items[num_items] = newItem;
      num_items++;
 }
@@ -187,7 +187,7 @@ void Stack<T>::resize(size_t n){
      // change maxitems. copy and num items same
      T* items_new = new T[n];
 
-     for (size_t i = 0; i < num_items; i++) {
+     for (int i = 0; i < num_items; i++) {
        items_new[i] = items[i];
      }
 
