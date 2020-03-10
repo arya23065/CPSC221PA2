@@ -68,11 +68,12 @@ HSLAPixel borderColorPicker::operator()(point p)
   int currY = p.y + borderSize;
 
   HSLAPixel *currPixel = img.getPixel(p.x, p.y);
-  for (int i = p.x-borderSize; i <= currX; i++){
-      for (int j = p.y-borderSize; j <= currY; j++){
+  for (int i = p.x - borderSize; i <= currX; i++){
+      for (int j = p.y - borderSize; j <= currY; j++){
           if (j >= img.height() || i >= img.width() || i < 0 || j < 0 ||
                   ((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize && img.getPixel(i,j)->dist(p.c.color) > tolerance)){
-              return p.c.color;
+              // return p.c.color;
+              return fillColor;
           }
       }
   }
