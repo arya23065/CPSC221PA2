@@ -16,7 +16,7 @@ animation filler::fillBFS(FillerConfig &config)
      * @todo Your code here! You should replace the following line with a
      * correct call to fill.
      */
-
+    return fill<Queue>(config);
 }
 
 /**
@@ -31,7 +31,7 @@ animation filler::fillDFS(FillerConfig &config)
      * @todo Your code here! You should replace the following line with a
      * correct call to fill.
      */
-
+    return fill<Stack>(config);
 }
 
 /**
@@ -74,11 +74,11 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
      *        While the order in which you examine neighbors does not matter
      *        for a proper fill, you must use the same order as we do for
      *        your animations to come out like ours! The order you should put
-     *        neighboring pixels **ONTO** the queue or stack is as follows:
-     *        ** LEFT(-x), DOWN(+y), RIGHT(+x), UP(-y). IMPORTANT NOTE: *UP*
+     *        neighboring pixels *ONTO* the queue or stack is as follows:
+     *        * LEFT(-x), DOWN(+y), RIGHT(+x), UP(-y). IMPORTANT NOTE: *UP
      *        here means towards the top of the image, so since an image has
-     *        smaller y coordinates at the top, this is in the *negative y*
-     *        direction. Similarly, *DOWN* means in the *positive y*
+     *        smaller y coordinates at the top, this is in the negative y
+     *        direction. Similarly, DOWN means in the positive y
      *        direction.** To reiterate, when you are exploring (filling out)
      *        from a given pixel, you must first try to fill the pixel to
      *        it's LEFT, then the one DOWN from it, then to the RIGHT and
@@ -93,7 +93,7 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
      *        it should only be updated by the first fill. To repeat, pixels should only
      *        be modified the first time they are visited by the filler algorithm.
      *
-     * 3.     For every k pixels filled, **starting at the kth pixel**, you
+     * 3.     For every k pixels filled, *starting at the kth pixel*, you
      *        must add a frame to the animation, where k = frameFreq.
      *
      *        For example, if frameFreq is 4, then after the 4th pixel has
@@ -108,5 +108,63 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
      *        it will be the one we test against.
      *
      */
+    int n = 0;
+    OrderingStructure<point> os;
+    vector<vector<bool>>visited;
+    unsigned int height = config.img.height();
+    unsigned int width = config.img.width();
+    visited.resize(height, vector<bool>(width));
+    center c;
+    point now;
+    colorPicker* picker = NULL;
+    animation a;
+    a.addFrame(config.img);
+    for  (unsigned long j = 0; j < config.centers.size(); j++)
+    {
+        c = config.centers[j];
+        picker = config.pickers[j];
+        point p(c);
+        *config.img.getPixel(c.x, c.y) = picker->operator()(p);
+        os.add(p);
+        visited[p.y][p.x] = true;
+        n++;
+        while(!os.isEmpty()) {
+            vector<point>nearby;
+            now = os.remove();
+            point left(now.x-1, now.y, c);
+            nearby.push_back(left);
+            point down(now.x, now.y+1, c);
+            nearby.push_back(down);
+            point right(now.x+1, now.y, c);
+            nearby.push_back(right);
+            point up(now.x, now.y-1, c);
+            nearby.push_back(up);
+            for (int i = 0; i < 4; i++)
+            {
+                point pp = nearby[i];
+                if (checkrange((int) pp.x, (int) pp.y, width, height) && checktolerance(config, pp) && !visited[pp.y][pp.x])
+                {
+                    visited[pp.y][pp.x] = true;
+                    *config.img.getPixel(pp.x, pp.y) = picker->operator()(pp);
+                    os.add(pp);
+                    n++;
+                    if (n % config.frameFreq == 0)
+                    {
+                        a.addFrame(config.img);
+                    }
+                }
+            }
+        }
+    }
+     a.addFrame(config.img);
+     return a;
+}
 
+
+bool filler::checkrange(int x, int y, int width, int height) {
+    return ((x >= 0) && (y >= 0) && (x < width) && (y < height));
+}
+
+bool filler::checktolerance(FillerConfig &config, point& p) {
+    return (config.img.getPixel(p.x, p.y)->dist(p.c.color) <= config.tolerance);
 }

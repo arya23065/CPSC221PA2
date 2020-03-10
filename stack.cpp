@@ -74,16 +74,15 @@ T Stack<T>::pop(){
      */
      if (!isEmpty()) {
        T temp = items[num_items - 1];
-       items[num_items - 1] = NULL;
+       // items[num_items - 1] = NULL;
        num_items--;
-       std::cout << "hehhehehhhhhhhhhhhhhhh World! max items %p\n";
+       // std::cout << "hehhehehhhhhhhhhhhhhhh World! max items %p\n";
        // If, after removing an element, the number of elements in the stack is less than max_items / SHRINKRATE, you resize the stack.
        // the new max_items should be the old max_items * 1 / EXPANSIONFACTOR.
        if (num_items <  max_items / SHRINKRATE)   resize(max_items / EXPANSIONFACTOR);
        return temp;
      }
-     std::cout << "doneonoenoeneoneoen World! max items %p\n";
-     return NULL;
+
 };
 /**
  * Adds an element to the ordering structure.
@@ -127,7 +126,6 @@ T Stack<T>::peek(){
      * @todo Your code here!
      */
      if (!isEmpty()) return items[num_items - 1];
-     else return NULL;
 };
 
 /**
