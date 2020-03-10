@@ -186,12 +186,12 @@ TEST_CASE("colorPicker::basic fade", "[weight=1][part=colorPicker]")
     testOrWriteColorPicker(img, picker, "fadeColorPickerTest");
 }
 
-// TEST_CASE("colorPicker::basic border", "[weight=1][part=colorPicker]")
-// {
-//     PNG img = getSolidImage();
-//     borderColorPicker picker(5, HSLAPixel(240, 1.0, 0.5), img, 0.01);
-//     testOrWriteColorPicker(img, picker, "borderColorPickerTest");
-// }
+TEST_CASE("colorPicker::basic border", "[weight=1][part=colorPicker]")
+{
+    PNG img = getSolidImage();
+    borderColorPicker picker(5, HSLAPixel(240, 1.0, 0.5), img, 0.01);
+    testOrWriteColorPicker(img, picker, "borderColorPickerTest");
+}
 
 TEST_CASE("fill::solid bfs", "[weight=1][part=fill]")
 {
@@ -216,45 +216,45 @@ TEST_CASE("fill::solid dfs", "[weight=1][part=fill]")
 
     deleteConfig(config);
 }
-//
-// TEST_CASE("fill::border bfs", "[weight=1][part=fill]")
-// {
-//
-//     HSLAPixel fillColor(320.0, 0.8, 0.5);
-//
-//     filler::FillerConfig config;
-//     config.img.readFromFile(BORDERTESTIMAGE);
-//     config.frameFreq = BORDERFRAMEFREQ;
-//     config.tolerance = BORDERTOLERANCE;
-//     config.centers.push_back(getCenter(config.img, BORDERX, BORDERY));
-//     config.pickers.push_back(new borderColorPicker(BORDERSIZE, fillColor, config.img, config.tolerance));
-//
-//     animation anim = filler::fillBFS(config);
-//
-//     testOrWriteFill(anim, "bfs_border");
-//
-//     deleteConfig(config);
-// }
 
-// TEST_CASE("fill::border dfs", "[weight=1][part=fill]")
-// {
-//
-//     HSLAPixel fillColor(320.0, 0.8, 0.5);
-//
-//     filler::FillerConfig config;
-//     config.img.readFromFile(BORDERTESTIMAGE);
-//     config.frameFreq = BORDERFRAMEFREQ;
-//     config.tolerance = BORDERTOLERANCE;
-//     config.centers.push_back(getCenter(config.img, BORDERX, BORDERY));
-//     config.pickers.push_back(new borderColorPicker(BORDERSIZE, fillColor, config.img, config.tolerance));
-//
-//     animation anim = filler::fillDFS(config);
-//
-//     testOrWriteFill(anim, "dfs_border");
-//
-//     deleteConfig(config);
-// }
-//
+TEST_CASE("fill::border bfs", "[weight=1][part=fill]")
+{
+
+    HSLAPixel fillColor(320.0, 0.8, 0.5);
+
+    filler::FillerConfig config;
+    config.img.readFromFile(BORDERTESTIMAGE);
+    config.frameFreq = BORDERFRAMEFREQ;
+    config.tolerance = BORDERTOLERANCE;
+    config.centers.push_back(getCenter(config.img, BORDERX, BORDERY));
+    config.pickers.push_back(new borderColorPicker(BORDERSIZE, fillColor, config.img, config.tolerance));
+
+    animation anim = filler::fillBFS(config);
+
+    testOrWriteFill(anim, "bfs_border");
+
+    deleteConfig(config);
+}
+
+TEST_CASE("fill::border dfs", "[weight=1][part=fill]")
+{
+
+    HSLAPixel fillColor(320.0, 0.8, 0.5);
+
+    filler::FillerConfig config;
+    config.img.readFromFile(BORDERTESTIMAGE);
+    config.frameFreq = BORDERFRAMEFREQ;
+    config.tolerance = BORDERTOLERANCE;
+    config.centers.push_back(getCenter(config.img, BORDERX, BORDERY));
+    config.pickers.push_back(new borderColorPicker(BORDERSIZE, fillColor, config.img, config.tolerance));
+
+    animation anim = filler::fillDFS(config);
+
+    testOrWriteFill(anim, "dfs_border");
+
+    deleteConfig(config);
+}
+
 TEST_CASE("fill::fade bfs", "[weight=1][part=fill]")
 {
 
