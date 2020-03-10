@@ -190,7 +190,7 @@ void Stack<T>::resize(size_t n){
      // if (n < DEFAULTCAPACITY) items_new = new T[DEFAULTCAPACITY];
      // else   items_new = T[n];
 
-     for (int i = 0; i < num_items && i < n; i++) {
+     for (int i = 0; i < num_items; i++) {
        items_new[i] = items[i];
      }
 
