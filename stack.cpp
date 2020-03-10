@@ -185,9 +185,10 @@ void Stack<T>::resize(size_t n){
      // If, after removing an element, the number of elements in the stack is less than max_items / SHRINKRATE, you resize the stack.
      // the new max_items should be the old max_items * 1 / EXPANSIONFACTOR.
      // change maxitems. copy and num items same
-     T* items_new = new T[n];
+     T* items_new;
 
      if (n < DEFAULTCAPACITY) items_new = new T[DEFAULTCAPACITY];
+     else   items_new = T[n];
 
      for (int i = 0; i < num_items && i < n; i++) {
        items_new[i] = items[i];
