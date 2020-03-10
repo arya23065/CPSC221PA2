@@ -64,6 +64,7 @@ HSLAPixel borderColorPicker::operator()(point p)
       // HSLAPixel color = bcp(p); // bcp is a bordercolorpicker object,
       //                       // p is a point
 
+  /*
   int currX = p.x + borderSize;
   int currY = p.y + borderSize;
 
@@ -77,6 +78,25 @@ HSLAPixel borderColorPicker::operator()(point p)
           }
       }
   }
-  return *currPixel;
+  return *currPixel; */
 
+  for (int i = p.x - 3; i <= p.x+3; i++) {
+      for (int j = p.y -3; j <= p.y+3; j++) {
+          if (!(i == p.x && j == p.y)) {
+              if ((pow(i-p.x, 2) + pow(j-p.y, 2)) <= 9) {
+                  if (i >= img.width() || j >= img.height() ||
+                      i < 0 || j < 0 || 
+                      ((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize)) {
+                          return fillColor;
+                  }
+                  
+                  HSLAPixel *currPixel = img.getPixel(unsigned(i), (unsigned)j);
+                  if (currPixel->dist(p.c.color) > tolerance) {
+                      return fillColor;
+                  }
+              }
+          }
+      }
+  }
+  return (*(img.getPixel(p.x, p.y)));
 }
