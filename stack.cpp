@@ -187,6 +187,8 @@ void Stack<T>::resize(size_t n){
      // change maxitems. copy and num items same
      T* items_new = new T[n];
 
+     if (n < DEFAULTCAPACITY) items_new = new T[DEFAULTCAPACITY];
+
      for (int i = 0; i < num_items && i < n; i++) {
        items_new[i] = items[i];
      }
