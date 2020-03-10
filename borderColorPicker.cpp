@@ -46,14 +46,36 @@ borderColorPicker::borderColorPicker(unsigned int borderSize, HSLAPixel fillColo
 HSLAPixel borderColorPicker::operator()(point p)
 {
     /* your code here */
-    HSLAPixel* currPixel = img.getPixel(0, 0);
-    int borderY = 0;
-    int distance = 0;
-
-    // if (p.y <= img.width_/2)  borderY = 0;
-    // else  borderY = img.width_ - 1;
+    // HSLAPixel* currPixel = img.getPixel(0, 0);
+    // int borderY = 0;
+    //
+    // if (p.y <= img.width()/2)  borderY = 0;
+    // else  borderY = img.width() - 1;
+    //
+    // int distance = sqr(p.x-);
     //
     // if (p.x == borderSize)
     //   p.c.color = fillColor;
+    //
+    // for (int i = 0; i < img.width(); i++) {
+    //   for (int j = 0; )
+    // }
+
+      // HSLAPixel color = bcp(p); // bcp is a bordercolorpicker object,
+      //                       // p is a point
+
+  int currX = p.x + borderSize;
+  int currY = p.y + borderSize;
+
+  HSLAPixel *currPixel = img.getPixel(p.x, p.y);
+  for (int i = p.x-borderSize; i <= currX; i++){
+      for (int j = p.y-borderSize; j <= currY; j++){
+          if (j >= img.height() || i >= img.width() || i < 0 || j < 0 ||
+                  ((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize && img.getPixel(i,j)->dist(p.c.color) > tolerance)){
+              return p.c.color;
+          }
+      }
+  }
+  return *currPixel;
 
 }

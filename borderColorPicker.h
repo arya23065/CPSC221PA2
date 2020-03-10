@@ -3,11 +3,10 @@
  * Definition of a border color picker.
  *
  */
- #include "point.h"
-
 #ifndef _BORDERCOLORPICKER_H_
 #define _BORDERCOLORPICKER_H_
 
+#include "point.h"
 #include "colorPicker.h"
 
 /**
