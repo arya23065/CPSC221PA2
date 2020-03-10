@@ -109,13 +109,13 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
      *
      */
     int n = 0;
-    OrderingStructure<point> os;
-    vector<vector<bool>>visited;
-    unsigned int height = config.img.height();
     unsigned int width = config.img.width();
+    unsigned int height = config.img.height();
+    vector<vector<bool>>visited;
+    OrderingStructure<point> ordStr;
     visited.resize(height, vector<bool>(width));
+    point curr;
     center c;
-    point now;
     colorPicker* picker = NULL;
     animation a;
     a.addFrame(config.img);
@@ -125,19 +125,19 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
         picker = config.pickers[j];
         point p(c);
         *config.img.getPixel(c.x, c.y) = picker->operator()(p);
-        os.add(p);
+        ordStr.add(p);
         visited[p.y][p.x] = true;
         n++;
-        while(!os.isEmpty()) {
+        while(!ordStr.isEmpty()) {
             vector<point>nearby;
-            now = os.remove();
-            point left(now.x-1, now.y, c);
+            curr = ordStr.remove();
+            point left(curr.x-1, curr.y, c);
             nearby.push_back(left);
-            point down(now.x, now.y+1, c);
+            point down(curr.x, curr.y+1, c);
             nearby.push_back(down);
-            point right(now.x+1, now.y, c);
+            point right(curr.x+1, curr.y, c);
             nearby.push_back(right);
-            point up(now.x, now.y-1, c);
+            point up(curr.x, curr.y-1, c);
             nearby.push_back(up);
             for (int i = 0; i < 4; i++)
             {
@@ -146,7 +146,7 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
                 {
                     visited[pp.y][pp.x] = true;
                     *config.img.getPixel(pp.x, pp.y) = picker->operator()(pp);
-                    os.add(pp);
+                    ordStr.add(pp);
                     n++;
                     if (n % config.frameFreq == 0)
                     {
