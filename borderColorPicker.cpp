@@ -83,13 +83,13 @@ HSLAPixel borderColorPicker::operator()(point p)
   for (int i = p.x - 3; i <= p.x+3; i++) {
       for (int j = p.y -3; j <= p.y+3; j++) {
           if (!(i == p.x && j == p.y)) {
-              if ((pow(i-p.x, 2) + pow(j-p.y, 2)) <= 9) {
+              if (((i-p.x, 2)*(i-p.x, 2) + (j-p.y, 2)*(j-p.y, 2)) <= 9) {
                   if (i >= img.width() || j >= img.height() ||
-                      i < 0 || j < 0 || 
+                      i < 0 || j < 0 ||
                       ((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize)) {
                           return fillColor;
                   }
-                  
+
                   HSLAPixel *currPixel = img.getPixel(unsigned(i), (unsigned)j);
                   if (currPixel->dist(p.c.color) > tolerance) {
                       return fillColor;
