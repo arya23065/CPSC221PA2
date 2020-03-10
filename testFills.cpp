@@ -185,14 +185,14 @@ TEST_CASE("colorPicker::basic fade", "[weight=1][part=colorPicker]")
     fadeColorPicker picker(FADERATE);
     testOrWriteColorPicker(img, picker, "fadeColorPickerTest");
 }
-//
+
 // TEST_CASE("colorPicker::basic border", "[weight=1][part=colorPicker]")
 // {
 //     PNG img = getSolidImage();
 //     borderColorPicker picker(5, HSLAPixel(240, 1.0, 0.5), img, 0.01);
 //     testOrWriteColorPicker(img, picker, "borderColorPickerTest");
 // }
-//
+
 TEST_CASE("fill::solid bfs", "[weight=1][part=fill]")
 {
 

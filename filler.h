@@ -69,9 +69,6 @@ animation fillDFS(FillerConfig &config);
 template <template <class T> class OrderingStructure> animation fill(FillerConfig &config);
 
 // Add any helper functions here
-bool checkrange(int x, int y, int width, int height);
-
-bool checktolerance(FillerConfig &config, point& p);
 
 } // namespace filler
 

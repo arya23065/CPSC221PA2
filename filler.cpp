@@ -108,63 +108,61 @@ template <template <class T> class OrderingStructure> animation filler::fill(Fil
      *        it will be the one we test against.
      *
      */
-    int n = 0;
+    vector<vector<bool>> visited;
+    OrderingStructure<point> ordStr;
+    int val = 0;
+    point curr;
+    center center;
+    colorPicker* picker = NULL;
+    animation anim;
+
     unsigned int width = config.img.width();
     unsigned int height = config.img.height();
-    vector<vector<bool>>visited;
-    OrderingStructure<point> ordStr;
+
     visited.resize(height, vector<bool>(width));
-    point curr;
-    center c;
-    colorPicker* picker = NULL;
-    animation a;
-    a.addFrame(config.img);
+    anim.addFrame(config.img);
+
     for  (unsigned long j = 0; j < config.centers.size(); j++)
     {
-        c = config.centers[j];
+        center = config.centers[j];
         picker = config.pickers[j];
-        point p(c);
-        *config.img.getPixel(c.x, c.y) = picker->operator()(p);
+
+        point p(center);
+        *config.img.getPixel(center.x, center.y) = picker->operator()(p);
         ordStr.add(p);
         visited[p.y][p.x] = true;
-        n++;
+        val++;
         while(!ordStr.isEmpty()) {
-            vector<point>nearby;
+
+            vector<point> neighbours;
             curr = ordStr.remove();
-            point left(curr.x-1, curr.y, c);
-            nearby.push_back(left);
-            point down(curr.x, curr.y+1, c);
-            nearby.push_back(down);
-            point right(curr.x+1, curr.y, c);
-            nearby.push_back(right);
-            point up(curr.x, curr.y-1, c);
-            nearby.push_back(up);
-            for (int i = 0; i < 4; i++)
-            {
-                point pp = nearby[i];
-                if (checkrange((int) pp.x, (int) pp.y, width, height) && checktolerance(config, pp) && !visited[pp.y][pp.x])
-                {
-                    visited[pp.y][pp.x] = true;
-                    *config.img.getPixel(pp.x, pp.y) = picker->operator()(pp);
-                    ordStr.add(pp);
-                    n++;
-                    if (n % config.frameFreq == 0)
-                    {
-                        a.addFrame(config.img);
-                    }
+
+            point wPoint(curr.x-1, curr.y, center);
+            neighbours.push_back(wPoint);
+
+            point sPoint(curr.x, curr.y+1, center);
+            neighbours.push_back(sPoint);
+
+            point ePoint(curr.x+1, curr.y, center);
+            neighbours.push_back(ePoint);
+
+            point nPoint(curr.x, curr.y-1, center);
+            neighbours.push_back(nPoint);
+
+            for (int i = 0; i < 4; i++) {
+                point point = neighbours[i];
+                if ((int) point.x >= 0 && (int) point.y >= 0 && point.x < width && point.y < height &&
+                            config.img.getPixel(point.x, point.y)->dist(point.c.color) <= config.tolerance && !visited[point.y][point.x]) {
+                    *config.img.getPixel(point.x, point.y) = picker->operator()(point);
+                    ordStr.add(point);
+                    visited[point.y][point.x] = true;
+                    val++;
+                    if (val % config.frameFreq == 0)    anim.addFrame(config.img);
                 }
             }
         }
     }
-     a.addFrame(config.img);
-     return a;
-}
-
-
-bool filler::checkrange(int x, int y, int width, int height) {
-    return ((x >= 0) && (y >= 0) && (x < width) && (y < height));
-}
-
-bool filler::checktolerance(FillerConfig &config, point& p) {
-    return (config.img.getPixel(p.x, p.y)->dist(p.c.color) <= config.tolerance);
+    
+     anim.addFrame(config.img);
+     return anim;
 }

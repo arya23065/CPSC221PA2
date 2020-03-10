@@ -85,8 +85,8 @@ HSLAPixel borderColorPicker::operator()(point p)
           if (!(i == p.x && j == p.y)) {
               if (((i-p.x, 2)*(i-p.x, 2) + (j-p.y, 2)*(j-p.y, 2)) <= 9) {
                   if (i >= img.width() || j >= img.height() ||
-                      i < 0 || j < 0 ||
-                      ((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize)) {
+                      i < 0 || j < 0) {
+                     // (((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize))) {
                           return fillColor;
                   }
 
