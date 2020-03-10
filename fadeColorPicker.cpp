@@ -43,17 +43,9 @@ HSLAPixel fadeColorPicker::operator()(point p)
     /* your code here */
     // int currX = p.x + borderSize;
     // int currY = p.y + borderSize;
-    //
-    // HSLAPixel *currPixel = img.getPixel(p.x, p.y);
-    // for (int i = p.x - borderSize; i <= currX; i++){
-    //     for (int j = p.y - borderSize; j <= currY; j++){
-    //         if (j >= img.height() || i >= img.width() || i < 0 || j < 0 ||
-    //                 ((p.x - i) * (p.x - i) + (p.y - j) * (p.y - j) <= borderSize*borderSize && img.getPixel(i,j)->dist(p.c.color) > tolerance)){
-    //             // return p.c.color;
-    //             return fillColor;
-    //         }
-    //     }
-    // }
-    // return *currPixel;
+
+    double distance = sqrt(pow(p.x-p.c.x, 2) + pow(p.y-p.c.y, 2));
+    double l_new = p.c.color.l * pow(fadeFactor, distance);
+    return HSLAPixel(p.c.color.h, p.c.color.s, l_new);
 
 }
