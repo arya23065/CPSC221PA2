@@ -44,8 +44,8 @@ HSLAPixel fadeColorPicker::operator()(point p)
     // int currX = p.x + borderSize;
     // int currY = p.y + borderSize;
 
-    int distance = (pow((int)p.x-(int)p.c.x, 2) + pow((int)p.y-(int)p.c.y, 2));
-    double l_new = p.c.color.l * pow(fadeFactor, distance);
+    double distance = sqrt(pow((int)p.x-(int)p.c.x, 2) + pow((int)p.y-(int)p.c.y, 2));
+    double l_new = p.c.color.l * pow(fadeFactor, (int) distance);
     return HSLAPixel(p.c.color.h, p.c.color.s, l_new);
 
 }
